@@ -29,6 +29,33 @@ body.latte .todo-container {
   animation: fadeInUp 0.6s ease forwards;
 }
 
+body.latte .todo-stat {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: #4b3b2e;
+  transition: all 0.4s ease;
+}
+
+body.latte .todo-stat p {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.latte .todo-stat p:last-child {
+  border-right: none;
+}
+
+body.latte #stat-completed {
+  color: #6a994e;
+}
+
+body.latte #stat-active {
+  color: #b85c3e;
+}
+
 body.latte button {
   background: rgba(0, 0, 0, 0.05);
   color: #4b3b2e;
@@ -51,7 +78,7 @@ body.latte button:active {
 }
 
 body.latte input {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(100, 80, 60, 0.15);
   color: #4b3b2e;
   border: 1px solid rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(8px);

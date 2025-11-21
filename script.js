@@ -2,10 +2,14 @@ const form = document.getElementById("todo-form");
 const input = document.getElementById("todo-input");
 const list = document.getElementById("todo-list");
 const error = document.getElementById("error-message");
+const statTotal = document.getElementById("stat-total");
+const statCompleted = document.getElementById("stat-completed");
+const statActive = document.getElementById("stat-active");
 
 function addTask(text) {
   const li = document.createElement("li");
   li.className = "todo-item";
+  li.draggable = true;
   li.innerHTML = `
     <span class="todo-text">${text}</span>
     <div>
@@ -37,6 +41,7 @@ form.addEventListener("submit", function (e) {
   error.textContent = "";
   addTask(text);
   input.value = "";
+  updateStats();
 });
 
 list.addEventListener("click", function (e) {
@@ -47,6 +52,7 @@ list.addEventListener("click", function (e) {
     e.target.textContent = li.classList.contains("text-completed")
       ? "Batal"
       : "Selesai";
+    updateStats();
   }
 
   if (e.target.classList.contains("btn-edit")) {
@@ -72,5 +78,19 @@ list.addEventListener("click", function (e) {
 
   if (e.target.classList.contains("btn-delete")) {
     li.remove();
+    updateStats();
   }
 });
+
+function updateStats() {
+  const items = list.querySelectorAll(".todo-item");
+  const total = items.length;
+  const completed = [...items].filter((item) =>
+    item.classList.contains("text-completed")
+  ).length;
+  const active = total - completed;
+
+  statTotal.textContent = total;
+  statCompleted.textContent = completed;
+  statActive.textContent = active;
+}
