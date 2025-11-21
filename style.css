@@ -176,3 +176,18 @@ button {
   font-size: 0.85em;
   padding: 6px 12px;
 }
+
+.todo-filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.todo-filters button {
+  flex: 1;
+  max-width: 150px;
+  transition: all 0.3s ease;
+}

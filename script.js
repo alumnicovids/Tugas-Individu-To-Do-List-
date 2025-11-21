@@ -5,6 +5,7 @@ const error = document.getElementById("error-message");
 const statTotal = document.getElementById("stat-total");
 const statCompleted = document.getElementById("stat-completed");
 const statActive = document.getElementById("stat-active");
+const filter = document.getElementById("todo-filters");
 
 function addTask(text) {
   const li = document.createElement("li");
@@ -94,3 +95,34 @@ function updateStats() {
   statCompleted.textContent = completed;
   statActive.textContent = active;
 }
+
+filter.addEventListener("click", function (e) {
+  if (!e.target.dataset.filters) return;
+
+  const clickedButton = e.target;
+  const isActive = clickedButton.classList.contains("active");
+
+  const buttons = filter.querySelectorAll("button");
+  buttons.forEach((btn) => btn.classList.remove("active"));
+
+  const items = list.querySelectorAll(".todo-item");
+
+  if (isActive) {
+    items.forEach((item) => (item.style.display = "flex"));
+    return;
+  }
+
+  clickedButton.classList.add("active");
+
+  const filterType = clickedButton.dataset.filters;
+
+  items.forEach((item) => {
+    const isCompleted = item.classList.contains("text-completed");
+
+    if (filterType === "active") {
+      item.style.display = isCompleted ? "none" : "flex";
+    } else if (filterType === "completed") {
+      item.style.display = isCompleted ? "flex" : "none";
+    }
+  });
+});

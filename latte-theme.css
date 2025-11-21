@@ -119,6 +119,33 @@ body.latte .error-message {
   transition: color 0.4s ease, opacity 0.4s ease;
 }
 
+body.latte .todo-filters {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+body.latte .todo-filters button {
+  background: rgba(0, 0, 0, 0.05);
+  color: #4b3b2e;
+}
+
+body.latte .todo-filters button.active {
+  background: #d8c3a5;
+  color: #2e241a;
+  border: 1px solid #4b3b2e;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+body.latte .todo-filters button.active:hover {
+  background: #d8c3a5;
+  transform: scale(1);
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
