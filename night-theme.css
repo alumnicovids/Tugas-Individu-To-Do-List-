@@ -130,6 +130,7 @@ body.night .todo-item {
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border-radius: 14px;
+  margin-top: 10px;
 }
 
 body.night .todo-item:hover {
