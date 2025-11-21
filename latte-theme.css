@@ -1,0 +1,104 @@
+body.latte {
+  background: linear-gradient(135deg, #f5e9d7, #d8c3a5);
+  color: #4b3b2e;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body.latte .site-header {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+}
+
+body.latte .todo-container {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 600px;
+  margin: 40px auto;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #4b3b2e;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+body.latte button {
+  background: rgba(0, 0, 0, 0.05);
+  color: #4b3b2e;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: background 0.3s ease, transform 0.2s ease, color 0.3s ease;
+}
+
+body.latte button:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #2e241a;
+  transform: scale(1.03);
+}
+
+body.latte button:active {
+  transform: scale(0.97);
+}
+
+body.latte input {
+  background: rgba(255, 255, 255, 0.95);
+  color: #4b3b2e;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+body.latte input::placeholder {
+  color: #7a6a58;
+}
+
+body.latte .todo-item {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+  transition: all 0.3s ease;
+}
+
+body.latte .todo-item:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transform: scale(1.02);
+}
+
+body.latte .text-completed .todo-text {
+  color: #a88c6f;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+body.latte .error-message {
+  color: #b85c3e;
+  transition: color 0.4s ease, opacity 0.4s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
