@@ -1,0 +1,148 @@
+body.night {
+  background: linear-gradient(135deg, #2c3e50, #4ca1af);
+  color: #e0f0ff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --toggle-bg-off: #a0a0a0;
+  --toggle-circle: #e0f0ff;
+  --toggle-bg-on: #4ca1af;
+}
+
+body.night .site-header {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  color: #e0f0ff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.night .todo-container {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+body.night .todo-form {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+body.night input {
+  background: rgba(0, 0, 0, 0.3);
+  color: #e0f0ff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.night input::placeholder {
+  color: #b0cce0;
+}
+
+body.night button {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e0f0ff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.night button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: scale(1.03);
+}
+
+body.night button:active {
+  transform: scale(0.97);
+}
+
+body.night .todo-stat {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+body.night .todo-stat p {
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.night .todo-stat p:last-child {
+  border-right: none;
+}
+
+body.night #stat-completed {
+  color: #70e000;
+}
+
+body.night #stat-active {
+  color: #80bfff;
+}
+
+body.night .todo-filters {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body.night .todo-filters button {
+  background: rgba(0, 0, 0, 0.1);
+  color: #e0f0ff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.night .todo-filters button.active {
+  background: #4ca1af;
+  color: #2c3e50;
+  border: 1px solid #e0f0ff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+body.night .todo-filters button.active:hover {
+  background: #4ca1af;
+  transform: scale(1);
+}
+
+body.night .todo-item {
+  background: rgba(255, 255, 255, 0.15);
+  color: #e0f0ff;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: 14px;
+}
+
+body.night .todo-item:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  transform: scale(1.02);
+}
+
+body.night .text-completed .todo-text {
+  color: #a0b8cc;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+body.night .error-message {
+  color: #ffb3b3;
+}

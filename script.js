@@ -6,6 +6,26 @@ const statTotal = document.getElementById("stat-total");
 const statCompleted = document.getElementById("stat-completed");
 const statActive = document.getElementById("stat-active");
 const filter = document.getElementById("todo-filters");
+const themeSwitch = document.getElementById("theme-switch");
+const body = document.body;
+
+function applyTheme(theme) {
+  body.className = theme;
+  localStorage.setItem("theme", theme);
+  themeSwitch.checked = theme === "night";
+}
+
+function loadTheme() {
+  const savedTheme = localStorage.getItem("theme") || "latte";
+  applyTheme(savedTheme);
+}
+
+themeSwitch.addEventListener("change", function () {
+  const newTheme = this.checked ? "night" : "latte";
+  applyTheme(newTheme);
+});
+
+loadTheme();
 
 function addTask(text) {
   const li = document.createElement("li");

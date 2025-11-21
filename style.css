@@ -19,7 +19,7 @@ body {
   font-family: "Segoe UI", sans-serif;
   padding: 0;
   margin: 0;
-  transition: background 0.6 ease, color 0.6 ease;
+  transition: background var(--transition-slow), color var(--transition-slow);
 }
 
 body,
@@ -29,48 +29,70 @@ button,
 input,
 .todo-item {
   transition: background var(--transition-normal),
-    color var(--transition-normal), border var(--transition-normal);
+    color var(--transition-normal), border var(--transition-normal),
+    box-shadow var(--transition-normal);
 }
 
-.todo-container,
-button,
-input,
-.todo-item {
-  transition: background 0.6 ease, color 0.6 ease, border 0.6 ease;
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+}
+
+.theme-toggle label {
+  cursor: pointer;
+  user-select: none;
+}
+
+.theme-toggle input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 50px;
+  height: 24px;
+  background: var(--toggle-bg-off);
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.theme-toggle input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background-color: var(--toggle-circle);
+  border-radius: 50%;
+  transition: transform var(--transition-fast);
+}
+
+.theme-toggle input[type="checkbox"]:checked {
+  background: var(--toggle-bg-on);
+}
+
+.theme-toggle input[type="checkbox"]:checked::before {
+  transform: translateX(26px);
 }
 
 button {
-  backdrop-filter: blur(var(--blur-sm));
-  -webkit-backdrop-filter: blur(var(--blur-sm));
   border-radius: var(--radius-sm);
   font-weight: bold;
   cursor: pointer;
   padding: 8px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.15);
-  color: #000;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-button:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: translateY(-2px);
-}
-
-button:active {
-  transform: translateY(1px);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.site-header {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(var(--blur-md));
-  -webkit-backdrop-filter: blur(var(--blur-md));
-  padding: 20px;
-  text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  border-radius: 0 0 16px 16px;
+  transition: all var(--transition-fast);
 }
 
 .site-main {
@@ -78,13 +100,9 @@ button:active {
 }
 
 .todo-container {
-  backdrop-filter: blur(var(--blur-lg));
-  -webkit-backdrop-filter: blur(var(--blur-lg));
-  border-radius: var(--radius-sm);
   padding: 30px;
   max-width: 600px;
   margin: 40px auto;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .todo-stat {
@@ -109,10 +127,23 @@ button:active {
   margin-top: 4px;
 }
 
+.todo-filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.todo-filters button {
+  flex: 1;
+  max-width: 150px;
+}
+
 .todo-form {
   display: flex;
   gap: 10px;
-  margin-bottom: 10px;
 }
 
 .todo-form,
@@ -120,17 +151,13 @@ input {
   flex: 1;
   padding: 10px;
   border-radius: var(--radius-sm);
-  backdrop-filter: blur(var(--blur-sm));
-  -webkit-backdrop-filter: blur(var(--blur-sm));
 }
 
-.todo-form,
-button {
+.todo-form button {
   padding: 10px 16px;
 }
 
 .error-message {
-  color: #f00;
   margin-top: 5px;
   font-size: 0.9em;
   transition: color var(--transition-normal), opacity var(--transition-normal);
@@ -146,25 +173,19 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  backdrop-filter: blur(var(--blur-md));
-  -webkit-backdrop-filter: blur(var(--blur-md));
-  border-radius: var(--radius-sm);
   padding: 12px;
   margin-bottom: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   opacity: 1;
   transform: translateY(0);
   transition: opacity var(--transition-normal),
     transform var(--transition-normal);
-  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 .todo-text {
   flex-grow: 1;
   margin-right: 10px;
   word-break: break-word;
-  transition: color 0.4s ease, text-decoration 0.4s ease, font-style 0.4s ease,
-    opacity 0.4s ease;
+  transition: all var(--transition-normal);
 }
 
 .todo-item div {
@@ -177,17 +198,13 @@ button {
   padding: 6px 12px;
 }
 
-.todo-filters {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding: 10px;
-}
-
-.todo-filters button {
-  flex: 1;
-  max-width: 150px;
-  transition: all 0.3s ease;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
