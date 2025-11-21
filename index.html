@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>To-DO List Website</title>
+  </head>
+  <body>
+    <header>
+      <h1>To-Do List</h1>
+      <p>catat dan Kelola Tugasmu Dengan Mudah</p>
+    </header>
+
+    <main class="site-main">
+      <div class="todo-container">
+        <section class="card-one">
+          <h2>Tambahkan Tugas Baru</h2>
+          <form id="todo-form" class="todo-form">
+            <input
+              type="text"
+              id="todo-input"
+              placeholder="Masukkan tugas baru..."
+            />
+            <button type="submit" id="todo-input-btn">Tambah</button>
+            <p id="error-message" class="error-message"></p>
+          </form>
+        </section>
+
+        <section class="card-two">
+          <h2>Daftar Tugas Anda</h2>
+          <ul id="todo-list" class="todo-list"></ul>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
