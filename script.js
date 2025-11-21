@@ -25,21 +25,60 @@ themeSwitch.addEventListener("change", function () {
   applyTheme(newTheme);
 });
 
-loadTheme();
+function saveTasks() {
+  const items = list.querySelectorAll(".todo-item");
+  const tasks = [];
 
-function addTask(text) {
+  items.forEach((item) => {
+    tasks.push({
+      text: item.querySelector(".todo-text").textContent,
+      completed: item.classList.contains("text-completed"),
+    });
+  });
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function loadTasks() {
+  const savedTasks = localStorage.getItem("tasks");
+  if (!savedTasks) return;
+
+  try {
+    const tasks = JSON.parse(savedTasks);
+    list.innerHTML = "";
+
+    tasks.forEach((task) => {
+      addTask(task.text, task.completed);
+    });
+
+    updateStats();
+  } catch (e) {
+    console.error("Gagal memuat tugas dari localStorage:", e);
+    localStorage.removeItem("tasks");
+  }
+}
+
+function addTask(text, isCompleted = false) {
   const li = document.createElement("li");
   li.className = "todo-item";
+  if (isCompleted) {
+    li.classList.add("text-completed");
+  }
+
   li.draggable = true;
   li.innerHTML = `
     <span class="todo-text">${text}</span>
     <div>
-      <button class="btn-complete">Selesai</button>
+      <button class="btn-complete">${isCompleted ? "Batal" : "Selesai"}</button>
       <button class="btn-edit">Edit</button>
       <button class="btn-delete">Hapus</button>
     </div>
   `;
   list.appendChild(li);
+
+  if (!isCompleted) {
+    saveTasks();
+  }
 }
 
 form.addEventListener("submit", function (e) {
@@ -63,10 +102,12 @@ form.addEventListener("submit", function (e) {
   addTask(text);
   input.value = "";
   updateStats();
+  saveTasks();
 });
 
 list.addEventListener("click", function (e) {
   const li = e.target.closest("li");
+  if (!li) return;
 
   if (e.target.classList.contains("btn-complete")) {
     li.classList.toggle("text-completed");
@@ -74,6 +115,7 @@ list.addEventListener("click", function (e) {
       ? "Batal"
       : "Selesai";
     updateStats();
+    saveTasks();
   }
 
   if (e.target.classList.contains("btn-edit")) {
@@ -94,12 +136,14 @@ list.addEventListener("click", function (e) {
       }
 
       span.textContent = trimmed;
+      saveTasks();
     }
   }
 
   if (e.target.classList.contains("btn-delete")) {
     li.remove();
     updateStats();
+    saveTasks();
   }
 });
 
@@ -146,3 +190,6 @@ filter.addEventListener("click", function (e) {
     }
   });
 });
+
+loadTheme();
+loadTasks();
