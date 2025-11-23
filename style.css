@@ -198,6 +198,14 @@ input {
   padding: 6px 12px;
 }
 
+.search-wrapper {
+  margin-bottom: 15px;
+}
+
+.search-wrapper input {
+  width: 100%;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;

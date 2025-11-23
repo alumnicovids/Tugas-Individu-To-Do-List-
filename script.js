@@ -8,6 +8,7 @@ const statActive = document.getElementById("stat-active");
 const filter = document.getElementById("todo-filters");
 const themeSwitch = document.getElementById("theme-switch");
 const body = document.body;
+const searchInput = document.getElementById("search-input");
 
 function applyTheme(theme) {
   body.className = theme;
@@ -189,6 +190,52 @@ filter.addEventListener("click", function (e) {
       item.style.display = isCompleted ? "flex" : "none";
     }
   });
+});
+
+function filterTasks() {
+  const searchText = searchInput.value.toLowerCase();
+  const activeBtn = filter.querySelector("button.active");
+  const filterType = activeBtn ? activeBtn.dataset.filters : "all";
+
+  const items = list.querySelectorAll(".todo-item");
+
+  items.forEach((item) => {
+    const itemText = item.querySelector(".todo-text").textContent.toLowerCase();
+    const isCompleted = item.classList.contains("text-completed");
+
+    const matchesSearch = itemText.includes(searchText);
+
+    let matchesStatus = true;
+    if (filterType === "active") {
+      matchesStatus = !isCompleted;
+    } else if (filterType === "completed") {
+      matchesStatus = isCompleted;
+    }
+
+    if (matchesSearch && matchesStatus) {
+      item.style.display = "flex";
+    } else {
+      item.style.display = "none";
+    }
+  });
+}
+
+searchInput.addEventListener("input", filterTasks);
+
+filter.addEventListener("click", function (e) {
+  if (!e.target.dataset.filters) return;
+
+  const clickedButton = e.target;
+  const isActive = clickedButton.classList.contains("active");
+
+  const buttons = filter.querySelectorAll("button");
+  buttons.forEach((btn) => btn.classList.remove("active"));
+
+  if (!isActive) {
+    clickedButton.classList.add("active");
+  }
+
+  filterTasks();
 });
 
 loadTheme();
