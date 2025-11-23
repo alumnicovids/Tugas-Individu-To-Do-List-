@@ -144,13 +144,22 @@ button {
 .todo-form {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .todo-form,
 input {
-  flex: 1;
   padding: 10px;
   border-radius: var(--radius-sm);
+}
+
+#todo-input {
+  flex: 2;
+}
+
+#due-date-input {
+  flex: 1;
+  min-width: 150px;
 }
 
 .todo-form button {
@@ -179,6 +188,27 @@ input {
   transform: translateY(0);
   transition: opacity var(--transition-normal),
     transform var(--transition-normal);
+}
+
+.todo-item-details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-right: 10px;
+  word-break: break-word;
+  transition: all var(--transition-normal);
+}
+
+.todo-deadline {
+  font-size: 0.8em;
+  opacity: 0.7;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.expired {
+  color: #b85c3e;
+  font-weight: bold;
 }
 
 .todo-text {

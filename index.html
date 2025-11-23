@@ -31,6 +31,7 @@
               id="todo-input"
               placeholder="Masukkan tugas baru..."
             />
+            <input type="date" id="due-date-input" title="Tenggat Waktu" />
             <button type="submit" id="todo-input-btn">Tambah</button>
             <p id="error-message" class="error-message"></p>
           </form>
@@ -42,14 +43,6 @@
           <p>Belum Selesai: <span id="stat-active">0</span></p>
         </div>
 
-        <div class="search-wrapper">
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Cari nama tugas..."
-          />
-        </div>
-
         <div class="todo-filters" id="todo-filters">
           <button data-filters="active" id="btn-filter-active">
             Belum Selesai
@@ -57,6 +50,14 @@
           <button data-filters="completed" id="btn-filter-completed">
             Selesai
           </button>
+        </div>
+
+        <div class="search-wrapper">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Cari nama tugas..."
+          />
         </div>
 
         <section class="card-two">

@@ -9,6 +9,7 @@ const filter = document.getElementById("todo-filters");
 const themeSwitch = document.getElementById("theme-switch");
 const body = document.body;
 const searchInput = document.getElementById("search-input");
+const dueDateInput = document.getElementById("due-date-input");
 
 function applyTheme(theme) {
   body.className = theme;
@@ -31,9 +32,14 @@ function saveTasks() {
   const tasks = [];
 
   items.forEach((item) => {
+    const deadlineElement = item.querySelector(".todo-deadline");
+    const fullText = deadlineElement.textContent;
+    const dateAttribute = item.getAttribute("data-duedate") || "";
+
     tasks.push({
       text: item.querySelector(".todo-text").textContent,
       completed: item.classList.contains("text-completed"),
+      dueDate: dateAttribute,
     });
   });
 
@@ -49,7 +55,7 @@ function loadTasks() {
     list.innerHTML = "";
 
     tasks.forEach((task) => {
-      addTask(task.text, task.completed);
+      addTask(task.text, task.completed, task.dueDate || "");
     });
 
     updateStats();
@@ -59,22 +65,18 @@ function loadTasks() {
   }
 }
 
-function addTask(text, isCompleted = false) {
+function addTask(text, isCompleted = false, dueDate = "") {
   const li = document.createElement("li");
   li.className = "todo-item";
+
+  li.setAttribute("data-duedate", dueDate);
+
   if (isCompleted) {
     li.classList.add("text-completed");
   }
 
-  li.draggable = true;
-  li.innerHTML = `
-    <span class="todo-text">${text}</span>
-    <div>
-      <button class="btn-complete">${isCompleted ? "Batal" : "Selesai"}</button>
-      <button class="btn-edit">Edit</button>
-      <button class="btn-delete">Hapus</button>
-    </div>
-  `;
+  reRenderTaskContent(li, text, dueDate, isCompleted);
+
   list.appendChild(li);
 
   if (!isCompleted) {
@@ -82,9 +84,26 @@ function addTask(text, isCompleted = false) {
   }
 }
 
+function saveTasks() {
+  const items = list.querySelectorAll(".todo-item");
+  const tasks = [];
+
+  items.forEach((item) => {
+    tasks.push({
+      text: item.querySelector(".todo-text").textContent,
+      completed: item.classList.contains("text-completed"),
+      dueDate: item.getAttribute("data-duedate") || "",
+    });
+  });
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   const text = input.value.trim();
+  const dueDate = dueDateInput.value;
+
   if (text === "") {
     error.textContent = "Tugas tidak boleh kosong.";
     return;
@@ -100,8 +119,9 @@ form.addEventListener("submit", function (e) {
   }
 
   error.textContent = "";
-  addTask(text);
+  addTask(text, false, dueDate);
   input.value = "";
+  dueDateInput.value = "";
   updateStats();
   saveTasks();
 });
@@ -112,33 +132,58 @@ list.addEventListener("click", function (e) {
 
   if (e.target.classList.contains("btn-complete")) {
     li.classList.toggle("text-completed");
-    e.target.textContent = li.classList.contains("text-completed")
-      ? "Batal"
-      : "Selesai";
+
+    const currentText = li.querySelector(".todo-text").textContent;
+    const currentDueDate = li.getAttribute("data-duedate") || "";
+    const isCompleted = li.classList.contains("text-completed");
+
+    reRenderTaskContent(li, currentText, currentDueDate, isCompleted);
+
     updateStats();
     saveTasks();
   }
 
   if (e.target.classList.contains("btn-edit")) {
-    const span = li.querySelector(".todo-text");
-    const originalText = span.textContent;
-    const newText = prompt("Edit tugas:", originalText);
+    const originalText = li.querySelector(".todo-text").textContent;
+    const originalDate = li.getAttribute("data-duedate") || "";
+    const isCompleted = li.classList.contains("text-completed");
 
-    if (newText && newText.trim() !== "") {
-      const trimmed = newText.trim();
-      const isDuplicate = [...list.children].some((item) => {
-        const text = item.querySelector(".todo-text").textContent;
-        return text === trimmed && item !== li;
-      });
+    const newText = prompt("Edit nama tugas:", originalText);
 
-      if (isDuplicate) {
-        alert("Tugas dengan nama tersebut sudah ada.");
-        return;
-      }
+    if (newText === null) return;
 
-      span.textContent = trimmed;
-      saveTasks();
+    const trimmedText = newText.trim();
+    if (trimmedText === "") {
+      alert("Nama tugas tidak boleh kosong.");
+      return;
     }
+
+    const isDuplicate = [...list.children].some((item) => {
+      const text = item.querySelector(".todo-text").textContent;
+      return text === trimmedText && item !== li;
+    });
+
+    if (isDuplicate) {
+      alert("Tugas dengan nama tersebut sudah ada.");
+      return;
+    }
+
+    let newDate = prompt(
+      "Edit tenggat waktu (YYYY-MM-DD, kosongkan jika tidak ada):",
+      originalDate
+    );
+
+    if (newDate === null) {
+      newDate = originalDate;
+    }
+
+    newDate = newDate.trim();
+
+    li.setAttribute("data-duedate", newDate);
+
+    reRenderTaskContent(li, trimmedText, newDate, isCompleted);
+
+    saveTasks();
   }
 
   if (e.target.classList.contains("btn-delete")) {
@@ -162,26 +207,36 @@ function updateStats() {
 }
 
 function filterTasks() {
-  const searchText = searchInput.value.toLowerCase();
-  const activeBtn = filter.querySelector("button.active");
-  const filterType = activeBtn ? activeBtn.dataset.filters : "all";
+  const searchText = searchInput.value.trim().toLowerCase();
+
+  const activeStatusBtn = filter.querySelector("button[data-filters].active");
+  const filterType = activeStatusBtn ? activeStatusBtn.dataset.filters : "all";
+
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  const isDateSearch = dateRegex.test(searchText);
 
   const items = list.querySelectorAll(".todo-item");
 
   items.forEach((item) => {
     const itemText = item.querySelector(".todo-text").textContent.toLowerCase();
     const isCompleted = item.classList.contains("text-completed");
+    const itemDueDate = item.getAttribute("data-duedate");
 
-    const matchesSearch = itemText.includes(searchText);
+    let matchesSearchOrDate = true;
 
-    let matchesStatus = true;
-    if (filterType === "active") {
-      matchesStatus = !isCompleted;
-    } else if (filterType === "completed") {
-      matchesStatus = isCompleted;
+    if (searchText !== "") {
+      if (isDateSearch) {
+        matchesSearchOrDate = itemDueDate === searchText;
+      } else {
+        matchesSearchOrDate = itemText.includes(searchText);
+      }
     }
 
-    if (matchesSearch && matchesStatus) {
+    let matchesStatus = true;
+    if (filterType === "active") matchesStatus = !isCompleted;
+    if (filterType === "completed") matchesStatus = isCompleted;
+
+    if (matchesSearchOrDate && matchesStatus) {
       item.style.display = "flex";
     } else {
       item.style.display = "none";
@@ -206,6 +261,34 @@ filter.addEventListener("click", function (e) {
 
   filterTasks();
 });
+
+function reRenderTaskContent(li, text, dueDate, isCompleted) {
+  const today = new Date().setHours(0, 0, 0, 0);
+  const deadlineDate = dueDate ? new Date(dueDate).setHours(0, 0, 0, 0) : null;
+  const isExpired = deadlineDate && deadlineDate < today && !isCompleted;
+
+  const formattedDate = dueDate
+    ? new Date(dueDate).toLocaleDateString("id-ID", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      })
+    : "Tidak ada tenggat";
+
+  li.innerHTML = `
+    <div class="todo-item-details">
+        <span class="todo-text">${text}</span>
+        <span class="todo-deadline ${isExpired ? "expired" : ""}">
+            Tenggat: ${formattedDate}
+        </span>
+    </div>
+    <div>
+      <button class="btn-complete">${isCompleted ? "Batal" : "Selesai"}</button>
+      <button class="btn-edit">Edit</button>
+      <button class="btn-delete">Hapus</button>
+    </div>
+  `;
+}
 
 loadTheme();
 loadTasks();
