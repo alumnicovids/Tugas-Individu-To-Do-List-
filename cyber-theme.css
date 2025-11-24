@@ -1,0 +1,152 @@
+body.cyberpunk {
+  background: linear-gradient(135deg, #0a0a0a, #1c1c2c);
+  color: #00f0ff;
+  font-family: "Consolas", "Courier New", monospace;
+
+  --toggle-bg-off: #333333;
+  --toggle-circle: #00f0ff;
+  --toggle-bg-on: #ff0080;
+}
+
+body.cyberpunk .site-header {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  color: #00f0ff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+  border-bottom: 1px solid #ff0080;
+}
+
+body.cyberpunk .todo-container {
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+}
+
+body.cyberpunk .todo-form {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 0, 128, 0.3);
+  box-shadow: 0 0 10px rgba(255, 0, 128, 0.4);
+  margin-bottom: 20px;
+}
+
+body.cyberpunk input {
+  background: rgba(0, 0, 0, 0.5);
+  color: #00f0ff;
+  border: 1px solid #444;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+body.cyberpunk input::placeholder {
+  color: #888;
+}
+
+body.cyberpunk button {
+  background: rgba(255, 0, 128, 0.2);
+  color: #00f0ff;
+  border: 1px solid #ff0080;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 0 8px rgba(255, 0, 128, 0.5);
+}
+
+body.cyberpunk button:hover {
+  background: #ff0080;
+  color: #000000;
+  transform: scale(1.03);
+  box-shadow: 0 0 12px #ff0080;
+}
+
+body.cyberpunk .todo-stat {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+}
+
+body.cyberpunk .todo-stat p {
+  border-right: 1px solid rgba(255, 0, 128, 0.4);
+}
+
+body.cyberpunk .todo-stat p:last-child {
+  border-right: none;
+}
+
+body.cyberpunk #stat-completed {
+  color: #70ff00;
+}
+
+body.cyberpunk #stat-active {
+  color: #ff0080;
+}
+
+body.cyberpunk .expired {
+  color: #ff3333;
+  font-weight: bold;
+}
+
+body.cyberpunk .todo-filters {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 14px;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+body.cyberpunk .todo-filters button {
+  background: rgba(0, 0, 0, 0.1);
+  color: #00f0ff;
+  border: 1px solid #222;
+}
+
+body.cyberpunk .todo-filters button.active {
+  background: #00f0ff;
+  color: #1c1c2c;
+  border: 1px solid #00f0ff;
+  box-shadow: 0 0 10px #00f0ff;
+  transform: translateY(-1px);
+}
+
+body.cyberpunk #sort-by-due-date.active {
+  background: #ff0080;
+  color: #1c1c2c;
+  border: 1px solid #ff0080;
+  box-shadow: 0 0 10px #ff0080;
+}
+
+body.cyberpunk .todo-item {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 0, 128, 0.2);
+  border-radius: 14px;
+  margin-top: 10px;
+}
+
+body.cyberpunk .todo-item:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+  transform: scale(1.02);
+}
+
+body.cyberpunk .text-completed .todo-text {
+  color: #70ff00;
+  text-decoration-color: #70ff00;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+body.cyberpunk .error-message {
+  color: #ff0080;
+}

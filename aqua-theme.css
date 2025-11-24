@@ -1,0 +1,153 @@
+body.aqua {
+  background: linear-gradient(135deg, #a0e0ff, #f0f8ff, #c3e0ff);
+  color: #1a4e69;
+  font-family: "Segoe UI", sans-serif;
+
+  --toggle-bg-off: #4ca1af;
+  --toggle-circle: #f0f8ff;
+  --toggle-bg-on: #1a4e69;
+}
+
+body.aqua .site-header {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  color: #1a4e69;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(76, 161, 175, 0.3);
+}
+
+body.aqua .todo-container {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+body.aqua .todo-form {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(76, 161, 175, 0.4);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+body.aqua input {
+  background: rgba(255, 255, 255, 0.8);
+  color: #1a4e69;
+  border: 1px solid rgba(76, 161, 175, 0.3);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+body.aqua input::placeholder {
+  color: #769fb6;
+}
+
+body.aqua button {
+  background: #4ca1af;
+  color: #f0f8ff;
+  border: 1px solid #338997;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+body.aqua button:hover {
+  background: #338997;
+  color: #f0f8ff;
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.aqua .todo-stat {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+body.aqua .todo-stat p {
+  border-right: 1px solid rgba(76, 161, 175, 0.3);
+}
+
+body.aqua .todo-stat p:last-child {
+  border-right: none;
+}
+
+body.aqua #stat-completed {
+  color: #38c172;
+}
+
+body.aqua #stat-active {
+  color: #ff5757;
+}
+
+body.aqua .expired {
+  color: #ff5757;
+  font-weight: bold;
+}
+
+body.aqua .todo-filters {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 14px;
+  border: 1px solid rgba(76, 161, 175, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+body.aqua .todo-filters button {
+  background: rgba(76, 161, 175, 0.1);
+  color: #1a4e69;
+  border: 1px solid rgba(76, 161, 175, 0.2);
+}
+
+body.aqua .todo-filters button.active {
+  background: #4ca1af;
+  color: #f0f8ff;
+  border: 1px solid #338997;
+  box-shadow: 0 4px 10px rgba(76, 161, 175, 0.5);
+  transform: translateY(-1px);
+}
+
+body.aqua #sort-by-due-date.active {
+  background: #338997;
+  color: #f0f8ff;
+  border: 1px solid #4ca1af;
+  box-shadow: 0 4px 10px rgba(76, 161, 175, 0.5);
+}
+
+body.aqua .todo-item {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 14px;
+  margin-top: 10px;
+}
+
+body.aqua .todo-item:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  transform: scale(1.02);
+}
+
+body.aqua .text-completed .todo-text {
+  color: #769fb6;
+  text-decoration-color: #769fb6;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+body.aqua .error-message {
+  color: #ff5757;
+}

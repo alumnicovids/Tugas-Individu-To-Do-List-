@@ -1,0 +1,152 @@
+body.forest {
+  background: linear-gradient(135deg, #38483b, #c1c2b5, #6a796e);
+  color: #f2f5ed;
+  font-family: "Georgia", serif;
+
+  --toggle-bg-off: #8b996f;
+  --toggle-circle: #f2f5ed;
+  --toggle-bg-on: #a8b387;
+}
+
+body.forest .site-header {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  color: #f2f5ed;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+body.forest .todo-container {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.forest .todo-form {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(139, 153, 111, 0.5);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+body.forest input {
+  background: rgba(0, 0, 0, 0.3);
+  color: #f2f5ed;
+  border: 1px solid #555;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+body.forest input::placeholder {
+  color: #999;
+}
+
+body.forest button {
+  background: rgba(139, 153, 111, 0.4);
+  color: #f2f5ed;
+  border: 1px solid #8b996f;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.forest button:hover {
+  background: #a8b387;
+  color: #2e3831;
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+body.forest .todo-stat {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+body.forest .todo-stat p {
+  border-right: 1px solid rgba(139, 153, 111, 0.5);
+}
+
+body.forest .todo-stat p:last-child {
+  border-right: none;
+}
+
+body.forest #stat-completed {
+  color: #70ff00;
+}
+
+body.forest #stat-active {
+  color: #8b996f;
+}
+
+body.forest .expired {
+  color: #b85c3e;
+  font-weight: bold;
+}
+
+body.forest .todo-filters {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 14px;
+  border: 1px solid rgba(139, 153, 111, 0.4);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+body.forest .todo-filters button {
+  background: rgba(0, 0, 0, 0.1);
+  color: #f2f5ed;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+body.forest .todo-filters button.active {
+  background: #a8b387;
+  color: #2e3831;
+  border: 1px solid #8b996f;
+  box-shadow: 0 0 8px rgba(139, 153, 111, 0.6);
+  transform: translateY(-1px);
+}
+
+body.forest #sort-by-due-date.active {
+  background: #8b996f;
+  color: #f2f5ed;
+  border: 1px solid #a8b387;
+  box-shadow: 0 0 8px rgba(139, 153, 111, 0.6);
+}
+
+body.forest .todo-item {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  margin-top: 10px;
+}
+
+body.forest .todo-item:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  transform: scale(1.02);
+}
+
+body.forest .text-completed .todo-text {
+  color: #8b996f;
+  text-decoration-color: #a8b387;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+body.forest .error-message {
+  color: #b85c3e;
+}

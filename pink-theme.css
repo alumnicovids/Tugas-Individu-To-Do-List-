@@ -1,0 +1,153 @@
+body.pink {
+  background: linear-gradient(135deg, #f7b4c6, #fcefee, #e9a2b6);
+  color: #880044;
+  font-family: "Arial", sans-serif;
+
+  --toggle-bg-off: #f7b4c6;
+  --toggle-circle: #fff;
+  --toggle-bg-on: #e9a2b6;
+}
+
+body.pink .site-header {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  color: #880044;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(233, 162, 182, 0.5);
+}
+
+body.pink .todo-container {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+}
+
+body.pink .todo-form {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(247, 180, 198, 0.6);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+body.pink input {
+  background: rgba(255, 255, 255, 0.9);
+  color: #880044;
+  border: 1px solid rgba(233, 162, 182, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+body.pink input::placeholder {
+  color: #b07080;
+}
+
+body.pink button {
+  background: #e9a2b6;
+  color: #fff;
+  border: 1px solid #d37a91;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+body.pink button:hover {
+  background: #d37a91;
+  color: #fff;
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.pink .todo-stat {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+body.pink .todo-stat p {
+  border-right: 1px solid rgba(233, 162, 182, 0.5);
+}
+
+body.pink .todo-stat p:last-child {
+  border-right: none;
+}
+
+body.pink #stat-completed {
+  color: #4caf50;
+}
+
+body.pink #stat-active {
+  color: #e9a2b6;
+}
+
+body.pink .expired {
+  color: #cc0000;
+  font-weight: bold;
+}
+
+body.pink .todo-filters {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 14px;
+  border: 1px solid rgba(247, 180, 198, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+body.pink .todo-filters button {
+  background: rgba(247, 180, 198, 0.1);
+  color: #880044;
+  border: 1px solid rgba(233, 162, 182, 0.3);
+}
+
+body.pink .todo-filters button.active {
+  background: #e9a2b6;
+  color: #fff;
+  border: 1px solid #d37a91;
+  box-shadow: 0 4px 10px rgba(233, 162, 182, 0.5);
+  transform: translateY(-1px);
+}
+
+body.pink #sort-by-due-date.active {
+  background: #d37a91;
+  color: #fff;
+  border: 1px solid #e9a2b6;
+  box-shadow: 0 4px 10px rgba(233, 162, 182, 0.5);
+}
+
+body.pink .todo-item {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 14px;
+  margin-top: 10px;
+}
+
+body.pink .todo-item:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+}
+
+body.pink .text-completed .todo-text {
+  color: #b07080;
+  text-decoration-color: #b07080;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+body.pink .error-message {
+  color: #cc0000;
+}

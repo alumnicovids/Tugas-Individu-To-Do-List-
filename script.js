@@ -6,27 +6,44 @@ const statTotal = document.getElementById("stat-total");
 const statCompleted = document.getElementById("stat-completed");
 const statActive = document.getElementById("stat-active");
 const filter = document.getElementById("todo-filters");
-const themeSwitch = document.getElementById("theme-switch");
 const body = document.body;
 const searchInput = document.getElementById("search-input");
 const dueDateInput = document.getElementById("due-date-input");
 const sortButton = document.getElementById("sort-by-due-date");
+const themeButton = document.getElementById("theme-cycle-button");
+const THEMES = ["latte", "night", "aqua", "forest", "cyberpunk", "pink"];
 
 function applyTheme(theme) {
   body.className = theme;
   localStorage.setItem("theme", theme);
-  themeSwitch.checked = theme === "night";
+
+  if (themeButton) {
+    const themeName =
+      theme.charAt(0).toUpperCase() + theme.slice(1).replace("-", " ");
+    themeButton.textContent = "Tema: " + themeName;
+  }
 }
 
 function loadTheme() {
   const savedTheme = localStorage.getItem("theme") || "latte";
-  applyTheme(savedTheme);
+
+  if (!THEMES.includes(savedTheme)) {
+    applyTheme("latte");
+  } else {
+    applyTheme(savedTheme);
+  }
 }
 
-themeSwitch.addEventListener("change", function () {
-  const newTheme = this.checked ? "night" : "latte";
-  applyTheme(newTheme);
-});
+if (themeButton) {
+  themeButton.addEventListener("click", function () {
+    const currentTheme = body.className;
+    const currentIndex = THEMES.indexOf(currentTheme);
+    const nextIndex = (currentIndex + 1) % THEMES.length;
+    const newTheme = THEMES[nextIndex];
+
+    applyTheme(newTheme);
+  });
+}
 
 function loadTasks() {
   const savedTasks = localStorage.getItem("tasks");
