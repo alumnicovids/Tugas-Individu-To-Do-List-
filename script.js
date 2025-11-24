@@ -110,7 +110,9 @@ form.addEventListener("submit", function (e) {
   }
 
   const duplicate = [...list.children].some(
-    (item) => item.querySelector(".todo-text").textContent === text
+    (item) =>
+      item.querySelector(".todo-text").textContent.toLowerCase() ===
+      text.toLowerCase()
   );
 
   if (duplicate) {
@@ -161,8 +163,11 @@ list.addEventListener("click", function (e) {
     }
 
     const isDuplicate = [...list.children].some((item) => {
-      const text = item.querySelector(".todo-text").textContent;
-      return text === trimmedText && item !== li;
+      const existingText = item.querySelector(".todo-text").textContent;
+
+      return (
+        existingText.toLowerCase() === trimmedText.toLowerCase() && item !== li
+      );
     });
 
     if (isDuplicate) {
