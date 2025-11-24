@@ -37,21 +37,18 @@ function loadTasks() {
     list.innerHTML = "";
 
     tasks.forEach((task) => {
-      addTask(task.text, task.completed, task.dueDate || "");
+      addTask(task.text, task.completed, task.dueDate || "", false);
     });
 
     updateStats();
-
-    if (sortButton.classList.contains("active")) {
-      sortTasks(true);
-    }
+    filterTasks();
   } catch (e) {
     console.error("Gagal memuat tugas dari localStorage:", e);
     localStorage.removeItem("tasks");
   }
 }
 
-function addTask(text, isCompleted = false, dueDate = "") {
+function addTask(text, isCompleted = false, dueDate = "", isNewTask = true) {
   const li = document.createElement("li");
   li.className = "todo-item";
 
@@ -65,7 +62,7 @@ function addTask(text, isCompleted = false, dueDate = "") {
 
   list.appendChild(li);
 
-  if (!isCompleted) {
+  if (isNewTask) {
     saveTasks();
   }
 }
@@ -81,13 +78,6 @@ function saveTasks() {
       dueDate: item.getAttribute("data-duedate") || "",
     });
   });
-
-  const sortOrder = sortButton.getAttribute("data-sort-order");
-  const isSortingActive = sortButton.classList.contains("active");
-  localStorage.setItem(
-    "sortState",
-    JSON.stringify({ order: sortOrder, active: isSortingActive })
-  );
 
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
@@ -116,28 +106,26 @@ form.addEventListener("submit", function (e) {
   input.value = "";
   dueDateInput.value = "";
   updateStats();
-
-  if (sortButton.classList.contains("active")) {
-    sortTasks(true);
-  }
-  saveTasks();
+  filterTasks();
 });
 
 list.addEventListener("click", function (e) {
   const li = e.target.closest("li");
   if (!li) return;
-
   if (e.target.classList.contains("btn-complete")) {
     li.classList.toggle("text-completed");
-
+    const isCompleted = li.classList.contains("text-completed");
+    const completeButton = e.target;
+    completeButton.textContent = isCompleted ? "Batal" : "Selesai";
     const currentText = li.querySelector(".todo-text").textContent;
     const currentDueDate = li.getAttribute("data-duedate") || "";
-    const isCompleted = li.classList.contains("text-completed");
 
     reRenderTaskContent(li, currentText, currentDueDate, isCompleted);
 
     updateStats();
     saveTasks();
+    filterTasks();
+    return;
   }
 
   if (e.target.classList.contains("btn-edit")) {
@@ -180,16 +168,15 @@ list.addEventListener("click", function (e) {
 
     reRenderTaskContent(li, trimmedText, newDate, isCompleted);
 
-    if (sortButton.classList.contains("active")) {
-      sortTasks(true);
-    }
     saveTasks();
+    filterTasks();
   }
 
   if (e.target.classList.contains("btn-delete")) {
     li.remove();
     updateStats();
     saveTasks();
+    filterTasks();
   }
 });
 
@@ -206,21 +193,73 @@ function updateStats() {
   statActive.textContent = active;
 }
 
+function sortTasks(preventToggle = false) {
+  const items = Array.from(list.querySelectorAll(".todo-item"));
+  let currentOrder = sortButton.getAttribute("data-sort-order");
+
+  if (!preventToggle) {
+    if (!sortButton.classList.contains("active")) {
+      sortButton.classList.add("active");
+      currentOrder = "asc";
+    } else {
+      if (currentOrder === "asc") {
+        currentOrder = "desc";
+      } else {
+        sortButton.classList.remove("active");
+        sortButton.setAttribute("data-sort-order", "asc");
+        sortButton.textContent = "Urutkan Tenggat";
+
+        loadTasks();
+        filterTasks();
+        return;
+      }
+    }
+  }
+
+  if (!sortButton.classList.contains("active")) {
+    filterTasks();
+    return;
+  }
+
+  const sortedItems = items.sort((a, b) => {
+    const dateA = a.getAttribute("data-duedate");
+    const dateB = b.getAttribute("data-duedate");
+
+    const timeA = dateA ? new Date(dateA).getTime() : Infinity;
+    const timeB = dateB ? new Date(dateB).getTime() : Infinity;
+
+    const aIsHidden = a.style.display === "none";
+    const bIsHidden = b.style.display === "none";
+
+    if (aIsHidden && bIsHidden) return 0;
+    if (aIsHidden) return 1;
+    if (bIsHidden) return -1;
+
+    if (currentOrder === "asc") {
+      return timeA - timeB;
+    } else {
+      return timeB - timeA;
+    }
+  });
+
+  list.innerHTML = "";
+  sortedItems.forEach((item) => list.appendChild(item));
+
+  sortButton.setAttribute("data-sort-order", currentOrder);
+  sortButton.textContent =
+    currentOrder === "asc" ? "Tenggat Terdekat ⬇️" : "Tenggat Terjauh ⬆️";
+}
+
 function filterTasks() {
   const searchText = searchInput.value.trim().toLowerCase();
   const activeStatusBtn = filter.querySelector("button[data-filters].active");
   const filterType = activeStatusBtn ? activeStatusBtn.dataset.filters : "all";
-
-  if (filterType !== "all" || searchText !== "") {
-    sortButton.classList.remove("active");
-  }
-
   const items = list.querySelectorAll(".todo-item");
 
   items.forEach((item) => {
     const itemText = item.querySelector(".todo-text").textContent.toLowerCase();
     const isCompleted = item.classList.contains("text-completed");
-    const itemDueDate = item.getAttribute("data-duedate"); // YYYY-MM-DD
+    const itemDueDate = item.getAttribute("data-duedate");
 
     let matchesSearch = false;
 
@@ -254,98 +293,32 @@ function filterTasks() {
       item.style.display = "none";
     }
   });
+
+  if (sortButton.classList.contains("active")) {
+    sortTasks(true);
+  }
 }
 
 searchInput.addEventListener("input", filterTasks);
 
 filter.addEventListener("click", function (e) {
   const clickedButton = e.target;
-
   if (clickedButton.id === "sort-by-due-date") {
+    sortTasks();
+    saveTasks();
     return;
   }
-
-  if (!e.target.dataset.filters) return;
+  if (!clickedButton.dataset.filters) return;
 
   const isActive = clickedButton.classList.contains("active");
-
   const buttons = filter.querySelectorAll("button[data-filters]");
   buttons.forEach((btn) => btn.classList.remove("active"));
-
-  sortButton.classList.remove("active");
 
   if (!isActive) {
     clickedButton.classList.add("active");
   }
 
   filterTasks();
-});
-
-function sortTasks(preventToggle = false) {
-  const items = Array.from(list.querySelectorAll(".todo-item"));
-  let currentOrder = sortButton.getAttribute("data-sort-order");
-
-  if (!sortButton.classList.contains("active")) {
-    sortButton.classList.add("active");
-    currentOrder = "asc";
-  } else if (!preventToggle) {
-    currentOrder = currentOrder === "asc" ? "desc" : "asc";
-  }
-
-  const filterButtons = filter.querySelectorAll("button[data-filters]");
-  filterButtons.forEach((btn) => btn.classList.remove("active"));
-
-  filterTasks();
-
-  const sortedItems = items.sort((a, b) => {
-    const dateA = a.getAttribute("data-duedate");
-    const dateB = b.getAttribute("data-duedate");
-
-    if (a.style.display === "none" && b.style.display === "none") return 0;
-    if (a.style.display === "none") return currentOrder === "asc" ? 1 : -1;
-    if (b.style.display === "none") return currentOrder === "asc" ? -1 : 1;
-
-    const timeA = dateA ? new Date(dateA).getTime() : Infinity;
-    const timeB = dateB ? new Date(dateB).getTime() : Infinity;
-
-    if (currentOrder === "asc") {
-      return timeA - timeB;
-    } else {
-      return timeB - timeA;
-    }
-  });
-
-  list.innerHTML = "";
-  sortedItems.forEach((item) => list.appendChild(item));
-
-  sortButton.setAttribute("data-sort-order", currentOrder);
-  sortButton.textContent =
-    currentOrder === "asc" ? "Tenggat Terdekat ⬇️" : "Tenggat Terjauh ⬆️";
-
-  if (
-    !preventToggle &&
-    sortButton.classList.contains("active") &&
-    currentOrder === "desc"
-  ) {
-    sortButton.classList.remove("active");
-    sortButton.setAttribute("data-sort-order", "asc");
-    sortButton.textContent = "Urutkan Tenggat";
-  }
-}
-
-sortButton.addEventListener("click", () => {
-  if (
-    sortButton.classList.contains("active") &&
-    sortButton.getAttribute("data-sort-order") === "desc"
-  ) {
-    sortButton.classList.remove("active");
-    sortButton.setAttribute("data-sort-order", "asc");
-    sortButton.textContent = "Urutkan Tenggat";
-    filterTasks();
-  } else {
-    sortTasks();
-  }
-  saveTasks();
 });
 
 function reRenderTaskContent(li, text, dueDate, isCompleted) {
@@ -356,11 +329,12 @@ function reRenderTaskContent(li, text, dueDate, isCompleted) {
   const formattedDate = dueDate
     ? new Date(dueDate).toLocaleDateString("id-ID", {
         year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
+        month: "short",
+        day: "numeric",
       })
     : "Tidak ada tenggat";
 
+  const buttonDiv = li.querySelector("div:last-child");
   li.innerHTML = `
     <div class="todo-item-details">
         <span class="todo-text">${text}</span>
@@ -368,31 +342,24 @@ function reRenderTaskContent(li, text, dueDate, isCompleted) {
             Tenggat: ${formattedDate}
         </span>
     </div>
-    <div>
+  `;
+
+  if (!buttonDiv) {
+    const newButtonDiv = document.createElement("div");
+    newButtonDiv.innerHTML = `
       <button class="btn-complete">${isCompleted ? "Batal" : "Selesai"}</button>
       <button class="btn-edit">Edit</button>
       <button class="btn-delete">Hapus</button>
-    </div>
-  `;
-}
-
-function loadSortState() {
-  const savedState = localStorage.getItem("sortState");
-  if (savedState) {
-    const state = JSON.parse(savedState);
-    sortButton.setAttribute("data-sort-order", state.order || "asc");
-
-    if (state.active) {
-      sortButton.classList.add("active");
-      sortButton.textContent =
-        state.order === "asc" ? "Tenggat Terdekat ⬇️" : "Tenggat Terjauh ⬆️";
-    } else {
-      sortButton.classList.remove("active");
-      sortButton.textContent = "Urutkan Tenggat";
+    `;
+    li.appendChild(newButtonDiv);
+  } else {
+    const completeButton = buttonDiv.querySelector(".btn-complete");
+    if (completeButton) {
+      completeButton.textContent = isCompleted ? "Batal" : "Selesai";
     }
+    li.appendChild(buttonDiv);
   }
 }
 
 loadTheme();
-loadSortState();
 loadTasks();

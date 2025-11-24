@@ -134,7 +134,6 @@ button {
   margin-top: 20px;
   margin-bottom: 20px;
   padding: 10px;
-  flex-wrap: wrap;
 }
 
 .todo-filters button {
@@ -216,7 +215,7 @@ input {
   flex-grow: 1;
   margin-right: 10px;
   word-break: break-word;
-  transition: all var(--transition-normal);
+  transition: all var(--transition-normal), text-decoration-color 0.4s ease;
 }
 
 .todo-item div {
