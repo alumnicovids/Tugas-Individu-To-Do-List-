@@ -173,6 +173,10 @@ list.addEventListener("click", function (e) {
   }
 
   if (e.target.classList.contains("btn-delete")) {
+    const confirmDelete = confirm(
+      "Apakah Anda yakin ingin menghapus tugas ini?"
+    );
+    if (!confirmDelete) return;
     li.remove();
     updateStats();
     saveTasks();
