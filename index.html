@@ -10,23 +10,23 @@
     <link rel="stylesheet" href="forest-theme.css" />
     <link rel="stylesheet" href="cyber-theme.css" />
     <link rel="stylesheet" href="pink-theme.css" />
-    <title>To-DO List Website</title>
+    <title>📝 To-Do List Website</title>
   </head>
   <body class="latte">
     <header class="site-header">
       <div class="header-content">
-        <h1>To-Do List</h1>
-        <p>Catat dan Kelola Tugasmu Dengan Mudah</p>
+        <h1>✅ To-Do List</h1>
+        <p>Catat dan Kelola Tugasmu Dengan Mudah 🚀</p>
       </div>
       <div class="theme-toggle">
-        <button id="theme-cycle-button">Tema: Latte</button>
+        <button id="theme-cycle-button">Tema: Latte ☕</button>
       </div>
     </header>
 
     <main class="site-main">
       <div class="todo-container">
         <section class="card-one">
-          <h2>Tambahkan Tugas Baru</h2>
+          <h2>➕ Tambahkan Tugas Baru</h2>
           <form id="todo-form" class="todo-form">
             <input
               type="text"
@@ -34,26 +34,26 @@
               placeholder="Masukkan tugas baru..."
             />
             <input type="date" id="due-date-input" title="Tenggat Waktu" />
-            <button type="submit" id="todo-input-btn">Tambah</button>
+            <button type="submit" id="todo-input-btn">Tambah ✨</button>
             <p id="error-message" class="error-message"></p>
           </form>
         </section>
 
         <div id="todo-stat" class="todo-stat">
-          <p>Total Tugas: <span id="stat-total">0</span></p>
-          <p>Selesai: <span id="stat-completed">0</span></p>
-          <p>Belum Selesai: <span id="stat-active">0</span></p>
+          <p>Total Tugas: <span id="stat-total">0</span> 📊</p>
+          <p>Selesai: <span id="stat-completed">0</span> ✅</p>
+          <p>Belum Selesai: <span id="stat-active">0</span> ⏳</p>
         </div>
 
         <div class="todo-filters" id="todo-filters">
           <button data-filters="active" id="btn-filter-active">
-            Belum Selesai
+            Belum Selesai ⏳
           </button>
           <button data-filters="completed" id="btn-filter-completed">
-            Selesai
+            Selesai ✅
           </button>
           <button id="sort-by-due-date" data-sort-order="asc">
-            Urutkan Tenggat
+            Urutkan Tenggat 🗓️
           </button>
         </div>
 
@@ -61,12 +61,12 @@
           <input
             type="text"
             id="search-input"
-            placeholder="Cari nama tugas atau tenggat waktu(dd-mm-yyyy)..."
+            placeholder="Cari nama tugas atau tenggat waktu(dd-mm-yyyy)... 🔍"
           />
         </div>
 
         <section class="card-two">
-          <h2>Daftar Tugas Anda</h2>
+          <h2>📋 Daftar Tugas Anda</h2>
           <ul id="todo-list" class="todo-list"></ul>
         </section>
       </div>
@@ -74,7 +74,7 @@
 
     <div id="edit-modal" class="modal">
       <div class="modal-content">
-        <h2>Edit Tugas</h2>
+        <h2>✏️ Edit Tugas</h2>
         <form id="edit-form">
           <label for="edit-task-input">Nama Tugas:</label>
           <input type="text" id="edit-task-input" required />
@@ -83,13 +83,23 @@
           <input type="date" id="edit-date-input" />
 
           <div class="modal-buttons">
-            <button type="submit" id="save-edit-btn">Simpan</button>
-            <button type="button" id="cancel-edit-btn">Batal</button>
+            <button type="submit" id="save-edit-btn">Simpan 💾</button>
+            <button type="button" id="cancel-edit-btn">Batal ❌</button>
           </div>
         </form>
       </div>
     </div>
 
+    <div id="delete-modal" class="modal">
+      <div class="modal-content">
+        <h2>🗑️ Konfirmasi Hapus</h2>
+        <p>Apakah Anda yakin ingin menghapus tugas ini?</p>
+        <div class="modal-buttons">
+          <button type="button" id="confirm-delete-btn">Hapus 👍</button>
+          <button type="button" id="cancel-delete-btn">Batal 👎</button>
+        </div>
+      </div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>

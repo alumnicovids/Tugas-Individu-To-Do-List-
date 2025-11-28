@@ -20,6 +20,20 @@ const editDateInput = document.getElementById("edit-date-input");
 const cancelEditButton = document.getElementById("cancel-edit-btn");
 let currentEditLi = null;
 
+const deleteModal = document.getElementById("delete-modal");
+const confirmDeleteButton = document.getElementById("confirm-delete-btn");
+const cancelDeleteButton = document.getElementById("cancel-delete-btn");
+let currentDeleteLi = null;
+
+const THEME_EMOJIS = {
+  latte: "☕",
+  night: "🌙",
+  aqua: "💧",
+  forest: "🌳",
+  cyberpunk: "🧠",
+  pink: "🌸",
+};
+
 function applyTheme(theme) {
   body.className = theme;
   localStorage.setItem("theme", theme);
@@ -27,7 +41,8 @@ function applyTheme(theme) {
   if (themeButton) {
     const themeName =
       theme.charAt(0).toUpperCase() + theme.slice(1).replace("-", " ");
-    themeButton.textContent = "Tema: " + themeName;
+    const emoji = THEME_EMOJIS[theme] || "";
+    themeButton.textContent = "Tema: " + themeName + " " + emoji;
   }
 }
 
@@ -112,7 +127,7 @@ form.addEventListener("submit", function (e) {
   const dueDate = dueDateInput.value;
 
   if (text === "") {
-    error.textContent = "Tugas tidak boleh kosong.";
+    error.textContent = "Tugas tidak boleh kosong. ⛔";
     return;
   }
 
@@ -123,7 +138,7 @@ form.addEventListener("submit", function (e) {
   );
 
   if (duplicate) {
-    error.textContent = "Tugas sudah ada.";
+    error.textContent = "Tugas sudah ada. ⚠️";
     return;
   }
 
@@ -142,7 +157,7 @@ list.addEventListener("click", function (e) {
     li.classList.toggle("text-completed");
     const isCompleted = li.classList.contains("text-completed");
     const completeButton = e.target;
-    completeButton.textContent = isCompleted ? "Batal" : "Selesai";
+    completeButton.textContent = isCompleted ? "Batal ↩️" : "Selesai ✅";
     const currentText = li.querySelector(".todo-text").textContent;
     const currentDueDate = li.getAttribute("data-duedate") || "";
 
@@ -169,16 +184,38 @@ list.addEventListener("click", function (e) {
   }
 
   if (e.target.classList.contains("btn-delete")) {
-    const confirmDelete = confirm(
-      "Apakah Anda yakin ingin menghapus tugas ini?"
-    );
-    if (!confirmDelete) return;
-    li.remove();
-    updateStats();
-    saveTasks();
-    filterTasks();
+    currentDeleteLi = li;
+    deleteModal.classList.add("open");
+    deleteModal.style.display = "flex";
+    return;
   }
 });
+
+confirmDeleteButton.addEventListener("click", function () {
+  if (!currentDeleteLi) return;
+
+  currentDeleteLi.remove();
+  updateStats();
+  saveTasks();
+  filterTasks();
+  closeDeleteModal();
+});
+
+cancelDeleteButton.addEventListener("click", closeDeleteModal);
+
+deleteModal.addEventListener("click", function (e) {
+  if (e.target === deleteModal) {
+    closeDeleteModal();
+  }
+});
+
+function closeDeleteModal() {
+  deleteModal.classList.remove("open");
+  setTimeout(() => {
+    deleteModal.style.display = "none";
+  }, 300);
+  currentDeleteLi = null;
+}
 
 function updateStats() {
   const items = list.querySelectorAll(".todo-item");
@@ -207,7 +244,7 @@ function sortTasks(preventToggle = false) {
       } else {
         sortButton.classList.remove("active");
         sortButton.setAttribute("data-sort-order", "asc");
-        sortButton.textContent = "Urutkan Tenggat";
+        sortButton.textContent = "Urutkan Tenggat 🗓️";
 
         loadTasks();
         filterTasks();
@@ -339,7 +376,7 @@ function reRenderTaskContent(li, text, dueDate, isCompleted) {
     <div class="todo-item-details">
         <span class="todo-text">${text}</span>
         <span class="todo-deadline ${isExpired ? "expired" : ""}">
-            Tenggat: ${formattedDate}
+            Tenggat: ${formattedDate} ${isExpired ? "❗" : "🗓️"}
         </span>
     </div>
   `;
@@ -347,15 +384,17 @@ function reRenderTaskContent(li, text, dueDate, isCompleted) {
   if (!buttonDiv) {
     const newButtonDiv = document.createElement("div");
     newButtonDiv.innerHTML = `
-      <button class="btn-complete">${isCompleted ? "Batal" : "Selesai"}</button>
-      <button class="btn-edit">Edit</button>
-      <button class="btn-delete">Hapus</button>
+      <button class="btn-complete">${
+        isCompleted ? "Batal ↩️" : "Selesai ✅"
+      }</button>
+      <button class="btn-edit">Edit ✏️</button>
+      <button class="btn-delete">Hapus 🗑️</button>
     `;
     li.appendChild(newButtonDiv);
   } else {
     const completeButton = buttonDiv.querySelector(".btn-complete");
     if (completeButton) {
-      completeButton.textContent = isCompleted ? "Batal" : "Selesai";
+      completeButton.textContent = isCompleted ? "Batal ↩️" : "Selesai ✅";
     }
     li.appendChild(buttonDiv);
   }
@@ -379,7 +418,7 @@ editForm.addEventListener("submit", function (e) {
   const isCompleted = currentEditLi.classList.contains("text-completed");
 
   if (newText === "") {
-    alert("Nama tugas tidak boleh kosong.");
+    alert("Nama tugas tidak boleh kosong. ⛔");
     editTaskInput.focus();
     return;
   }
@@ -394,7 +433,7 @@ editForm.addEventListener("submit", function (e) {
   });
 
   if (isDuplicate) {
-    alert("Tugas dengan nama tersebut sudah ada.");
+    alert("Tugas dengan nama tersebut sudah ada. ⚠️");
     editTaskInput.focus();
     return;
   }
