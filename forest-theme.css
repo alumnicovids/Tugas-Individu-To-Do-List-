@@ -6,6 +6,9 @@ body.forest {
   --toggle-bg-off: #8b996f;
   --toggle-circle: #f2f5ed;
   --toggle-bg-on: #a8b387;
+
+  --modal-bg-color: linear-gradient(135deg, #38483b, #c1c2b5, #6a796e);
+  --text-light: #8b996f;
 }
 
 body.forest .site-header {

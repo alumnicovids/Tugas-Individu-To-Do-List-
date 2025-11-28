@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -71,6 +71,25 @@
         </section>
       </div>
     </main>
+
+    <div id="edit-modal" class="modal">
+      <div class="modal-content">
+        <h2>Edit Tugas</h2>
+        <form id="edit-form">
+          <label for="edit-task-input">Nama Tugas:</label>
+          <input type="text" id="edit-task-input" required />
+
+          <label for="edit-date-input">Tenggat Waktu:</label>
+          <input type="date" id="edit-date-input" />
+
+          <div class="modal-buttons">
+            <button type="submit" id="save-edit-btn">Simpan</button>
+            <button type="button" id="cancel-edit-btn">Batal</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>

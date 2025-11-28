@@ -13,6 +13,13 @@ const sortButton = document.getElementById("sort-by-due-date");
 const themeButton = document.getElementById("theme-cycle-button");
 const THEMES = ["latte", "night", "aqua", "forest", "cyberpunk", "pink"];
 
+const editModal = document.getElementById("edit-modal");
+const editForm = document.getElementById("edit-form");
+const editTaskInput = document.getElementById("edit-task-input");
+const editDateInput = document.getElementById("edit-date-input");
+const cancelEditButton = document.getElementById("cancel-edit-btn");
+let currentEditLi = null;
+
 function applyTheme(theme) {
   body.className = theme;
   localStorage.setItem("theme", theme);
@@ -148,50 +155,17 @@ list.addEventListener("click", function (e) {
   }
 
   if (e.target.classList.contains("btn-edit")) {
+    currentEditLi = li;
     const originalText = li.querySelector(".todo-text").textContent;
     const originalDate = li.getAttribute("data-duedate") || "";
-    const isCompleted = li.classList.contains("text-completed");
 
-    const newText = prompt("Edit nama tugas:", originalText);
+    editTaskInput.value = originalText;
+    editDateInput.value = originalDate;
 
-    if (newText === null) return;
-
-    const trimmedText = newText.trim();
-    if (trimmedText === "") {
-      alert("Nama tugas tidak boleh kosong.");
-      return;
-    }
-
-    const isDuplicate = [...list.children].some((item) => {
-      const existingText = item.querySelector(".todo-text").textContent;
-
-      return (
-        existingText.toLowerCase() === trimmedText.toLowerCase() && item !== li
-      );
-    });
-
-    if (isDuplicate) {
-      alert("Tugas dengan nama tersebut sudah ada.");
-      return;
-    }
-
-    let newDate = prompt(
-      "Edit tenggat waktu (YYYY-MM-DD, kosongkan jika tidak ada):",
-      originalDate
-    );
-
-    if (newDate === null) {
-      newDate = originalDate;
-    }
-
-    newDate = newDate.trim();
-
-    li.setAttribute("data-duedate", newDate);
-
-    reRenderTaskContent(li, trimmedText, newDate, isCompleted);
-
-    saveTasks();
-    filterTasks();
+    editModal.classList.add("open");
+    editModal.style.display = "flex";
+    editTaskInput.focus();
+    return;
   }
 
   if (e.target.classList.contains("btn-delete")) {
@@ -386,6 +360,60 @@ function reRenderTaskContent(li, text, dueDate, isCompleted) {
     li.appendChild(buttonDiv);
   }
 }
+
+function closeModal() {
+  editModal.classList.remove("open");
+  setTimeout(() => {
+    editModal.style.display = "none";
+  }, 300);
+  currentEditLi = null;
+}
+
+editForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  if (!currentEditLi) return;
+
+  const newText = editTaskInput.value.trim();
+  const newDate = editDateInput.value.trim();
+  const isCompleted = currentEditLi.classList.contains("text-completed");
+
+  if (newText === "") {
+    alert("Nama tugas tidak boleh kosong.");
+    editTaskInput.focus();
+    return;
+  }
+
+  const isDuplicate = [...list.children].some((item) => {
+    const existingText = item.querySelector(".todo-text").textContent;
+
+    return (
+      existingText.toLowerCase() === newText.toLowerCase() &&
+      item !== currentEditLi
+    );
+  });
+
+  if (isDuplicate) {
+    alert("Tugas dengan nama tersebut sudah ada.");
+    editTaskInput.focus();
+    return;
+  }
+
+  currentEditLi.setAttribute("data-duedate", newDate);
+  reRenderTaskContent(currentEditLi, newText, newDate, isCompleted);
+
+  saveTasks();
+  filterTasks();
+  closeModal();
+});
+
+cancelEditButton.addEventListener("click", closeModal);
+
+editModal.addEventListener("click", function (e) {
+  if (e.target === editModal) {
+    closeModal();
+  }
+});
 
 loadTheme();
 loadTasks();

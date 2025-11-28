@@ -6,6 +6,9 @@ body.latte {
   --toggle-bg-off: #d8c3a5;
   --toggle-circle: #fff;
   --toggle-bg-on: #4ca1af;
+
+  --modal-bg-color: linear-gradient(135deg, #a88c6f, #e8dcc6, #b89470);
+  --text-light: #4b3b2e;
 }
 
 body.latte .site-header {

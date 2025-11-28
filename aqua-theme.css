@@ -6,6 +6,9 @@ body.aqua {
   --toggle-bg-off: #4ca1af;
   --toggle-circle: #f0f8ff;
   --toggle-bg-on: #1a4e69;
+
+  --modal-bg-color: linear-gradient(135deg, #a0e0ff, #f0f8ff, #c3e0ff);
+  --text-light: #1a4e69;
 }
 
 body.aqua .site-header {

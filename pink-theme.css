@@ -6,6 +6,9 @@ body.pink {
   --toggle-bg-off: #f7b4c6;
   --toggle-circle: #fff;
   --toggle-bg-on: #e9a2b6;
+
+  --modal-bg-color: linear-gradient(135deg, #f7b4c6, #fcefee, #e9a2b6);
+  --text-light: #880044;
 }
 
 body.pink .site-header {

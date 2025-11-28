@@ -6,6 +6,9 @@ body.night {
   --toggle-bg-off: #a0a0a0;
   --toggle-circle: #e0f0ff;
   --toggle-bg-on: #4ca1af;
+
+  --modal-bg-color: linear-gradient(135deg, #2c3e50, #4ca1af, #2c3e50);
+  --text-light: #4ca1af;
 }
 
 body.night .site-header {

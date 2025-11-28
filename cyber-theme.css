@@ -6,6 +6,9 @@ body.cyberpunk {
   --toggle-bg-off: #333333;
   --toggle-circle: #00f0ff;
   --toggle-bg-on: #ff0080;
+
+  --modal-bg-color: linear-gradient(135deg, #0a0a0a, #1c1c2c);
+  --text-light: #ff0080;
 }
 
 body.cyberpunk .site-header {
